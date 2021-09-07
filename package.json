@@ -1,0 +1,21 @@
+{
+  "name": "endyjs",
+  "version": "1.0.0",
+  "description": "A discord.js bot by Endy#3032",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Endy3032",
+  "license": "ISC",
+  "dependencies": {
+    "discord-buttons": "^4.0.0",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "node": "^16.6.1"
+  }
+}
