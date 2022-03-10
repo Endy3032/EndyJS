@@ -11,9 +11,15 @@
   "author": "Endy3032",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "@sapphire/snowflake": "^2.0.0",
+    "discord-api-types": "^0.20.2",
     "discord-buttons": "^4.0.0",
     "discord.js": "^13.1.0",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   },
   "devDependencies": {
     "node": "^16.6.1"
