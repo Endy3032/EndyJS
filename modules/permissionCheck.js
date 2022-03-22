@@ -1,9 +1,9 @@
 // const { emojis, nordChalk } = require("./index")
-const emojis = require("./emojis")
-const nordChalk = require("./colors").nordChalk
-const perms = require("./permissions")
+import emojis from "./emojis"
+import { nordChalk } from "./colors"
+import perms from "./permissions"
 
-module.exports = async (interaction, ...permissions) => {
+export default async (interaction, ...permissions) => {
   if (!interaction.guild) {
     await interaction.reply({ content: `${emojis.error.shorthand} This command can only be used in a server`, ephemeral: true })
     return true

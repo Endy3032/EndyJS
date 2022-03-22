@@ -224,7 +224,7 @@ const Convert = {
   }
 }
 
-module.exports = {
+export default {
   convert: Convert,
   RGB, HSV, CMYK
 }

@@ -1,4 +1,4 @@
-module.exports = function (tag, content) {
+export default function (tag, content) {
   logTime = new Date().toLocaleString("default", {
     timeZone: "Asia/Ho_Chi_Minh",
     year: "numeric",

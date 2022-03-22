@@ -1,6 +1,6 @@
-const { ActivityType } = require("discord.js")
+import { ActivityType } from "discord.js"
 
-module.exports = [
+export default [
   {
     activities: [{ name: "discord.js", type: ActivityType.Playing }],
     status: "idle"

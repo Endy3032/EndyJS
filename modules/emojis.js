@@ -11,4 +11,4 @@ Object.keys(emojis).forEach(emoji => {
   emojis[emoji].shorthand = `<:${emojis[emoji].name}:${emojis[emoji].id}>`
 })
 
-module.exports = emojis
+export default emojis

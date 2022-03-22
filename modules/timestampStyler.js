@@ -1,4 +1,4 @@
-module.exports = (timestamp, mode) => {
+export default (timestamp, mode) => {
   ts = Math.floor(timestamp / 1000)
   switch (mode) {
     case "stime": return `<t:${ts}:t>`

@@ -1,12 +1,12 @@
-const os = require("os")
-const morgan = require("morgan")
-const express = require("express")
-const { createWriteStream } = require("fs")
+import morgan from "morgan"
+import express from "express"
+import { hostname } from "os"
+import { createWriteStream } from "fs"
 
 const server = express()
 const port = 3032
 
-var httplog = !os.hostname().includes("local") ? createWriteStream("./logs/http.log", { flags: "a" }) : null
+var httplog = !hostname().includes("local") ? createWriteStream("./logs/http.log", { flags: "a" }) : null
 server.use(morgan("[:date[web]] \":method :url\" :status :user-agent", { stream: httplog }))
 
 server.all("/", (_, res) => {
@@ -17,4 +17,4 @@ function keepAlive() {
   server.listen(port, () => {console.tagLog("Server", "Ready")})
 }
 
-module.exports = keepAlive
+export default keepAlive

@@ -1,11 +1,12 @@
-const fs = require("fs")
-const keepAlive = require("./server")
-const stripAnsi = require("strip-ansi")
-const { capitalize, nordChalk } = require("./modules")
-const { Client, Collection, GatewayIntentBits, Partials } = require("discord.js")
+import keepAlive from "./server.js"
+import stripAnsi from "strip-ansi"
+import { capitalize, nordChalk } from "./modules/index.js"
+import { createWriteStream, readdirSync } from "fs"
+import { Client, Collection, GatewayIntentBits, Partials } from "discord.js"
+import "dotenv/config"
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages], partials: [Partials.Channel] })
-const logStream = fs.createWriteStream("./logs/botlog.log", { flags: "a" })
+const logStream = createWriteStream("./logs/botlog.log", { flags: "a" })
 
 console.botLog = async (content, logLevel = "INFO", embed = null) => {
   const date = new Date()
@@ -13,21 +14,22 @@ console.botLog = async (content, logLevel = "INFO", embed = null) => {
   const channel = client.channels.cache.get(process.env.Log)
   content = content.replaceAll("    ", "  ").replaceAll(process.cwd(), "EndyJS")
 
-  logLevelColors = {
+  const logLevelColors = {
     INFO: nordChalk.info,
     WARN: nordChalk.warn,
     ERROR: nordChalk.error,
     DEBUG: nordChalk.debug,
   }
 
-  logTime = date.toLocaleString("default", {
+  const logTime = date.toLocaleString("default", {
     timeZone: "Asia/Ho_Chi_Minh",
     year: "numeric", month: "2-digit", day: "2-digit",
     hour: "2-digit", minute: "2-digit", second: "2-digit",
     hour12: false, fractionalSecondDigits: 2
   }).replace(",", "")
 
-  console.log(consoleLog = nordChalk.blue(`${logTime} ${logLevelColors[logLevel](logLevel.padEnd(5, " "))} ${`| ${content}`}`.replaceAll("\n", "\n                             | ")))
+  const consoleLog = nordChalk.blue(`${logTime} ${logLevelColors[logLevel](logLevel.padEnd(5, " "))} ${`| ${content}`}`.replaceAll("\n", "\n                             | "))
+  console.log(consoleLog)
   logStream.write(stripAnsi(`${consoleLog}\n`))
 
   content = stripAnsi(content.replaceAll("[ ", "[").replaceAll(" ]", "]"))
@@ -59,19 +61,21 @@ console.tagLog = async (tag, content) => {
 }
 
 client.commands = new Collection()
-const commandFiles = fs.readdirSync("./commands").filter((file) => file.endsWith(".js"))
+const commandFiles = readdirSync("./commands").filter((file) => file.endsWith(".js"))
 commandFiles.forEach((file) => {
-  const command = require(`./commands/${file}`)
-  client.commands.set(command.cmd.name, command)
+  import(`./commands/${file}`).then((command) => {
+    client.commands.set(command.cmd.name, command)
+  })
 })
 
-const eventFiles = fs.readdirSync("./events").filter((file) => file.endsWith(".js"))
+const eventFiles = readdirSync("./events").filter((file) => file.endsWith(".js"))
 eventFiles.forEach((file) => {
-  const event = require(`./events/${file}`)
+  import(`./events/${file}`).then((event) => {
+    event.once
+      ? client.once(event.name, (...args) => event.execute(...args))
+      : client.on(event.name, (...args) => event.execute(...args))
+  })
 
-  event.once
-    ? client.once(event.name, (...args) => event.execute(...args))
-    : client.on(event.name, (...args) => event.execute(...args))
 })
 
 client.login(process.env.Token)

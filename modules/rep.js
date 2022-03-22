@@ -1,4 +1,4 @@
-module.exports = async (interaction, object) => {
+export default async (interaction, object) => {
   if (interaction.isAutocomplete) return
   try {
     interaction.replied || interaction.deferred

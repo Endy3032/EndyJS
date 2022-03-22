@@ -1,7 +1,7 @@
-const chalk = require("chalk")
-const chalkLog = new chalk.Instance({ level: 3 })
+import { Chalk } from "chalk"
+const chalkLog = new Chalk({ level: 3 })
 
-discordColors = [
+export const colors = [
   "5865F2", "57F287", "FEE75C", "EB459E", "ED4245",
   "F47B67", "F8A532", "48B784", "45DDCO", "99AAB5",
   "23272A", "B7C2CE", "4187ED", "36393F", "3E70DD",
@@ -11,7 +11,7 @@ discordColors = [
   "09bOf2", "2f3136", "ec4145", "fe73f6", "000000"
 ]
 
-nordChalk = {
+export const nordChalk = {
   // Polar Night
   night1: chalkLog.hex("2E3440"),
   night2: chalkLog.hex("3B4252"),
@@ -113,7 +113,4 @@ nordChalk = {
   }
 }
 
-module.exports = {
-  nordChalk: nordChalk,
-  colors: discordColors
-}
+// export { discordColors, nordChalk }
