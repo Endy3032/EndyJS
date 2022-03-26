@@ -10,4 +10,3 @@ function firstLetter(content: string) {
 
 export default capitalize
 export { firstLetter }
-// Object.assign(module.exports, { firstLetter })

@@ -23,6 +23,7 @@
   "rules": {
     "@typescript-eslint/ban-types": ["off", "never"],
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-var-requires": "off",
     "enforceForRenamedProperties": "off",
     "indent": ["warn", 2, { "SwitchCase": 1, "flatTernaryExpressions": true }],
     "linebreak-style": ["warn", "unix"],
