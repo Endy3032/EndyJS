@@ -8,6 +8,7 @@ export = async function (client: Discord.Bot, payload: any) {
     : console.log("[Replit] Client Ready")
   // ? console.botLog(`${nordChalk.bright.cyan("[VSCode]")} Client Ready`)
   // : console.botLog(`${nordChalk.bright.cyan("[Replit]")} Client Ready`)
+  console.log(client)
   const { user } = payload
-  console.log(`Ready! [${user.username}$${user.discriminator}]`)
+  console.log(`Ready! [${user.username}#${user.discriminator}]`)
 }

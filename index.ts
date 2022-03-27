@@ -18,6 +18,14 @@ readdirSync("./events").filter(file => file.endsWith(".ts")).forEach(async file 
   clientOptions.events[eventName] = event
 })
 
+var commands = {}
+
+readdirSync("./commands").filter(file => file.endsWith(".ts")).forEach(async file => {
+  const command = require(`./commands/${file}`)
+  const [commandName] = file.split(".")
+  commands[commandName] = command
+})
+
 const client = Discord.createBot(clientOptions)
 
 // console.botLog = async(content: string, level: LogLevel = LogLevel.Info) => {

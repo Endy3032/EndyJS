@@ -12968,30 +12968,6 @@ const colors = {
   text: "#FFFFFF"
 }
 
-// colors = {
-//   background: "#0E1420",
-//   tilebg: "#2E3440",
-//   keybg: "#1E2430",
-//   present: "#EBCB8B",
-//   absent: "#2E3440",
-//   correct: "#A3BE8C",
-//   text: "#ECEFF4"
-// }
-
-interface WordleCanvas {
-  width: number
-  height: number
-  space: number
-  size: number
-  keyFont: number
-  tileFont: number
-  tileStartingX: number
-  tileStartingY: number
-  keyWidth: number
-  keyStartingY: number
-  keys: string[][]
-}
-
 const width = 750
 const height = 1000
 const space = 10
@@ -13004,7 +12980,7 @@ const keyWidth = (width - 11 * space)/10
 const keyStartingY = height - (space + size) * 3
 const keys = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"], ["A", "S", "D", "F", "G", "H", "J", "K", "L"], ["Z", "X", "C", "V", "B", "N", "M"]]
 
-const canvas: WordleCanvas = {
+const canvas = {
   width, height, space, size, keyFont, tileFont,
   tileStartingX, tileStartingY, keyWidth, keyStartingY, keys
 }

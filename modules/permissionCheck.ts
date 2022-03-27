@@ -1,17 +1,24 @@
 import emojis from "./emojis"
 import perms from "./permissions"
 import { nordChalk } from "./colors"
-import { ChatInputCommandInteraction, PermissionsBitField } from "discord.js"
+import { Bot, Interaction, InteractionResponseTypes, sendInteractionResponse } from "discordeno"
+import { InteractionOptions } from "../Structures/Interaction"
+// import { ChatInputCommandInteraction, PermissionsBitField } from "discord.js"
 
-export default async (interaction: ChatInputCommandInteraction, ...permissions: bigint[]) => {
-  if (!interaction.guild) {
-    await interaction.reply({ content: `${emojis.error.shorthand} This command can only be used in a server`, ephemeral: true })
+export default async (client: Bot, interaction: Interaction, ...permissions: bigint[]) => {
+  if (!interaction.guildId) {
+    await sendInteractionResponse(client, interaction.id, interaction.token, {
+      type: InteractionResponseTypes.ChannelMessageWithSource,
+      data: { content: `${emojis.error.shorthand} This command can only be used in a server`, flags: MsgFlags.Ephemeral }
+    })
     return true
   }
 
+  const options = new InteractionOptions(client, interaction)
+
   let block = false
   let consoleLog = `${nordChalk.yellow("Permissions")} [`
-  let repContent = `Permissions needed to use the \`${interaction.commandName}/${interaction.options.getSubcommandGroup() || "_"}/${interaction.options.getSubcommand() || "_"}\` command:`
+  let repContent = `Permissions needed to use the \`${interaction.data?.name}/${options.getSubcommandGroup() || "_"}/${options.getSubcommand() || "_"}\` command:`
   permissions.forEach(permission => {
     const permName = perms[permission.toString()]
     const hasPerm = (interaction.member?.permissions as PermissionsBitField).has(permission)
