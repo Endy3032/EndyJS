@@ -1,34 +1,18 @@
 {
-  "display": "Node 16",
-  "$schema": "https://json.schemastore.org/tsconfig",
-
   "compilerOptions": {
-    "lib": ["es2021"],
-    "target": "es2021",
-    "module": "ESNext",
-    "typeRoots": ["./node_modules/@types", "typings"],
-
-    // "noEmit": true,
-    "outDir": "./dist",
-    "strict": true,
     "allowJs": true,
-    "checkJs": true,
     "alwaysStrict": false,
-    "skipLibCheck": false,
-    "noImplicitAny": false,
-    "esModuleInterop": true,
+    "checkJs": true,
+    "declaration": true,
+    "declarationDir": "typings",
     "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true
+    "noImplicitAny": false,
+    "outDir": "dist",
+    "skipLibCheck": false,
+    "typeRoots": ["./node_modules/@types", "typings"]
   },
-  "exclude": [
-    "logs",
-    "Resources",
-    "node_modules"
-  ],
-  "files": [
-    "index.ts",
-    "deploy.ts",
-    "server.ts"
-  ],
-  "include": ["commands/*", "events/*", "modules/*", "Resources/**/*"]
+  "extends": "@tsconfig/node17/tsconfig.json",
+  "files": ["index.ts"],
+  "exclude": ["logs", "node_modules", "old"],
+  "include": ["Commands/**/*", "Events/**/*", "Managers/**/*", "Modules/**/*", "Resources/**/*", "Types/**/*"]
 }
