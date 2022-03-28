@@ -13,6 +13,6 @@
   },
   "extends": "@tsconfig/node17/tsconfig.json",
   "files": ["index.ts"],
-  "exclude": ["logs", "node_modules", "old"],
+  "exclude": ["logs", "node_modules", "old", "Ref"],
   "include": ["Commands/**/*", "Events/**/*", "Managers/**/*", "Modules/**/*", "Resources/**/*", "Types/**/*"]
 }
