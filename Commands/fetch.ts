@@ -9,6 +9,7 @@ import { existsSync, readFileSync, writeFile, writeFileSync } from "fs"
 import { choices, CountryCovidCase, GlobalCovidCase } from "../Resources/Covid"
 import { capitalize, colors, emojis, handleError, pickFromArray, TimeMetric } from "../Modules"
 import { ApplicationCommandType, ApplicationCommandOptionType, ApplicationCommandOptionChoice, AutocompleteInteraction, ChatInputCommandInteraction, ComponentType, SelectMenuInteraction } from "discord.js"
+import { APIActionRowComponent, APISelectMenuComponent } from "discord-api-types/v10"
 
 const repCovid = async (interaction: ChatInputCommandInteraction, covCase: CountryCovidCase | GlobalCovidCase, msg = "") => {
   let timestamp: Temporal.Instant
@@ -316,30 +317,28 @@ export async function execute(interaction: ChatInputCommandInteraction) {
       switch (interaction.options.getSubcommand()) {
         case "article": {
           const article = interaction.options.getString("query", true)
-          await wikipedia.page(article)
-            .then(async page => {
-              const summary = await page.summary()
-              const { pages: related } = await page.related()
+          const page = await wikipedia.page(article)
+          const summary = await page.summary()
+          const { pages: related } = await page.related()
 
-              interaction.editReply({ components: [{
-                type: ComponentType.ActionRow,
-                components: [{
-                  type: ComponentType.SelectMenu,
-                  placeholder: "Related Articles (doesnt work yet)",
-                  custom_id: "wikipedia-related",
-                  options: [...related.map(page => {
-                    return { label: page.title.replaceAll("_", " ").slice(0, 100), value: page.pageid.toString().slice(0, 100), description: page.description.slice(0, 100) }
-                  })].slice(0, 25)
-                }]
-              }], embeds: [{
-                title: summary.title.replaceAll("_", " "),
-                url: page.fullurl,
-                description: `**\`\`\`${summary.description}\`\`\`**\n${summary.extract}`,
-                color: parseInt(pickFromArray(colors), 16),
-                thumbnail: { url: summary.thumbnail.source },
-              }] })
-            })
-            .catch(() => {return interaction.editReply(`No Wikipedia article found for ${article}`)})
+          interaction.editReply({ components: [{
+            type: ComponentType.ActionRow,
+            components: [{
+              type: ComponentType.SelectMenu,
+              placeholder: "Related Articles (doesnt work yet)",
+              custom_id: "wikipedia-related",
+              options: [...related.map(page => {
+                return { label: page.title.replaceAll("_", " ").slice(0, 100), value: page.pageid.toString().slice(0, 100), description: page.description?.slice(0, 100) || undefined }
+              })].slice(0, 25)
+            }]
+          }], embeds: [{
+            title: summary.title.replaceAll("_", " "),
+            url: page.fullurl || undefined,
+            description: `**\`\`\`${summary.description}\`\`\`**\n${summary.extract}`,
+            color: parseInt(pickFromArray(colors), 16),
+            thumbnail: summary.thumbnail ? { url: summary.thumbnail.source } : undefined,
+          }] })
+            .catch((err) => {return interaction.editReply(err)})
           break
         }
       }
@@ -586,30 +585,28 @@ export async function selectMenu(interaction: SelectMenuInteraction) {
   if (interaction.customId == "wikipedia-related") {
     await interaction.deferUpdate()
     const [articleId] = interaction.values
-    await wikipedia.page(articleId)
-      .then(async page => {
-        const summary = await page.summary()
-        const { pages: related } = await page.related()
+    const page = await wikipedia.page(articleId)
+    const summary = await page.summary()
+    const { pages: related } = await page.related()
 
-        interaction.editReply({ components: [{
-          type: ComponentType.ActionRow,
-          components: [{
-            type: ComponentType.SelectMenu,
-            placeholder: "Related Articles (doesnt work yet)",
-            custom_id: "wikipedia-related",
-            options: [...related.map(page => {
-              return { label: page.title.replaceAll("_", " ").slice(0, 100), value: page.pageid.toString().slice(0, 100), description: page.description.slice(0, 100) }
-            })].slice(0, 25)
-          }]
-        }], embeds: [{
-          title: summary.title.replaceAll("_", " "),
-          url: page.fullurl,
-          description: `**\`\`\`${summary.description}\`\`\`**\n${summary.extract}`,
-          color: parseInt(pickFromArray(colors), 16),
-          thumbnail: { url: summary.thumbnail.source },
-        }] })
-      })
-      .catch((err: Error) => {return handleError(interaction, err, "Wikipedia")})
+    interaction.editReply({ components: [{
+      type: ComponentType.ActionRow,
+      components: [{
+        type: ComponentType.SelectMenu,
+        placeholder: "Related Articles (doesnt work yet)",
+        custom_id: "wikipedia-related",
+        options: [...related.map(page => {
+          return { label: page.title.replaceAll("_", " ").slice(0, 100), value: page.pageid.toString().slice(0, 100), description: page.description?.slice(0, 100) || undefined }
+        })].slice(0, 25)
+      }]
+    }], embeds: [{
+      title: summary.title.replaceAll("_", " "),
+      url: page.fullurl || undefined,
+      description: `**\`\`\`${summary.description}\`\`\`**\n${summary.extract}`,
+      color: parseInt(pickFromArray(colors), 16),
+      thumbnail: summary.thumbnail ? { url: summary.thumbnail.source } : undefined,
+    }] })
+      .catch((err) => {return interaction.editReply(err)})
   }
 }
 
