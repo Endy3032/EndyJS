@@ -325,7 +325,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             type: ComponentType.ActionRow,
             components: [{
               type: ComponentType.SelectMenu,
-              placeholder: "Related Articles (doesnt work yet)",
+              placeholder: "Related Articles",
               custom_id: "wikipedia-related",
               options: [...related.map(page => {
                 return { label: page.title.replaceAll("_", " ").slice(0, 100), value: page.pageid.toString().slice(0, 100), description: page.description?.slice(0, 100) || undefined }
@@ -593,7 +593,7 @@ export async function selectMenu(interaction: SelectMenuInteraction) {
       type: ComponentType.ActionRow,
       components: [{
         type: ComponentType.SelectMenu,
-        placeholder: "Related Articles (doesnt work yet)",
+        placeholder: "Related Articles",
         custom_id: "wikipedia-related",
         options: [...related.map(page => {
           return { label: page.title.replaceAll("_", " ").slice(0, 100), value: page.pageid.toString().slice(0, 100), description: page.description?.slice(0, 100) || undefined }
