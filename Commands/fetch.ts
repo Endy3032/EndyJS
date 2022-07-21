@@ -285,7 +285,7 @@ export async function execute(bot: Bot, interaction: Interaction) {
             Deno.writeTextFileSync("./Resources/cat-facts.json", JSON.stringify(fact, null, 2))
           }
 
-          [source, url] = ["vadimdemedes", "https://github.com/vadimdemedes/cat-facts"]
+          ;[source, url] = ["vadimdemedes", "https://github.com/vadimdemedes/cat-facts"]
           break
         }
 

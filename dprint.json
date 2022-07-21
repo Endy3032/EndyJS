@@ -8,7 +8,8 @@
     "singleBodyPosition": "sameLine",
     "arrowFunction.useParentheses": "preferNone",
     "constructorType.spaceAfterNewKeyword": true,
-    "constructSignature.spaceAfterNewKeyword": true
+    "constructSignature.spaceAfterNewKeyword": true,
+    "preferHanging": true
   },
   "json": {
   },

@@ -26,12 +26,12 @@ export const execute = async (bot: Bot, interaction: Interaction) => {
     const interactionLog = interaction.type == InteractionTypes.ApplicationCommand
       ? `Triggered ${rgb24(`/${[commandName, group, subcmd].join(" ").replaceAll("  ", " ")}`, BrightNord.cyan)}`
       : interaction.type == InteractionTypes.MessageComponent && interaction.data?.componentType == MessageComponentTypes.Button
-        ? `Pushed ${rgb24(`[${commandName}/${interaction.data.customId}]`, BrightNord.cyan)}`
-        : interaction.type == InteractionTypes.MessageComponent && interaction.data?.componentType == MessageComponentTypes.SelectMenu
-          ? `Selected ${rgb24(`[${commandName}/[${interaction.data?.values?.join("|")}]]`, BrightNord.cyan)}`
-          : interaction.type == InteractionTypes.ModalSubmit
-            ? `Submitted ${rgb24(`[${commandName}/${interaction.data?.customId}]`, BrightNord.cyan)}`
-            : "Unknown Interaction"
+      ? `Pushed ${rgb24(`[${commandName}/${interaction.data.customId}]`, BrightNord.cyan)}`
+      : interaction.type == InteractionTypes.MessageComponent && interaction.data?.componentType == MessageComponentTypes.SelectMenu
+      ? `Selected ${rgb24(`[${commandName}/[${interaction.data?.values?.join("|")}]]`, BrightNord.cyan)}`
+      : interaction.type == InteractionTypes.ModalSubmit
+      ? `Submitted ${rgb24(`[${commandName}/${interaction.data?.customId}]`, BrightNord.cyan)}`
+      : "Unknown Interaction"
 
     const discordTimestamp = toTimestamp(interaction.id)
 
@@ -50,14 +50,14 @@ export const execute = async (bot: Bot, interaction: Interaction) => {
   const [exec, type] = interaction.type == InteractionTypes.ApplicationCommand
     ? [command?.execute ?? undefined, "Command"]
     : interaction.type == InteractionTypes.MessageComponent && interaction.data?.componentType == MessageComponentTypes.Button
-      ? [command?.button ?? undefined, "Button"]
-      : interaction.type == InteractionTypes.MessageComponent && interaction.data?.componentType == MessageComponentTypes.SelectMenu
-        ? [command?.select ?? undefined, "Select Menu"]
-        : interaction.type == InteractionTypes.ModalSubmit
-          ? [command?.modal ?? undefined, "Modal"]
-          : interaction.type == InteractionTypes.ApplicationCommandAutocomplete
-            ? [command?.autocomplete ?? undefined, "Autocomplete"]
-            : [console.log, "Unknown"]
+    ? [command?.button ?? undefined, "Button"]
+    : interaction.type == InteractionTypes.MessageComponent && interaction.data?.componentType == MessageComponentTypes.SelectMenu
+    ? [command?.select ?? undefined, "Select Menu"]
+    : interaction.type == InteractionTypes.ModalSubmit
+    ? [command?.modal ?? undefined, "Modal"]
+    : interaction.type == InteractionTypes.ApplicationCommandAutocomplete
+    ? [command?.autocomplete ?? undefined, "Autocomplete"]
+    : [console.log, "Unknown"]
 
   if (exec !== undefined) {
     try {

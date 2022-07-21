@@ -10,8 +10,8 @@ export async function respond(bot: Bot, interaction: Interaction, response: Inte
     type = response.title
       ? InteractionResponseTypes.Modal
       : interaction.type == InteractionTypes.ApplicationCommandAutocomplete && response.choices
-        ? InteractionResponseTypes.ApplicationCommandAutocompleteResult
-        : InteractionResponseTypes.ChannelMessageWithSource
+      ? InteractionResponseTypes.ApplicationCommandAutocompleteResult
+      : InteractionResponseTypes.ChannelMessageWithSource
   }
 
   if (ephemeral) data.flags = MessageFlags.Ephemeral

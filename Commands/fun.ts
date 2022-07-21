@@ -184,8 +184,8 @@ export async function execute(bot: Bot, interaction: Interaction) {
           const response = question.endsWith("\u200a") || question.startsWith("\u200a")
             ? pickFromArray(responses.yes)
             : question.endsWith("\u200b") || question.startsWith("\u200b")
-              ? pickFromArray(responses.no)
-              : pickFromArray(responses[Object.keys(responses)[index]])
+            ? pickFromArray(responses.no)
+            : pickFromArray(responses[Object.keys(responses)[index]])
 
           await respond(bot, interaction, {
             embeds: [{

@@ -540,8 +540,8 @@ export async function execute(bot: Bot, interaction: Interaction) {
           content += option && user
             ? `from <@${user.user.id}> and ${option} only `
             : option || user
-              ? `from ${user ? `<@${user.user.id}>` : option} only `
-              : ""
+            ? `from ${user ? `<@${user.user.id}>` : option} only `
+            : ""
           content += `with the following reason: ${reason}`
 
           await respond(bot, interaction, {

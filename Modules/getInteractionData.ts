@@ -4,10 +4,10 @@ export function getCmdName(interaction: Interaction) {
   return [InteractionTypes.ApplicationCommand, InteractionTypes.ApplicationCommandAutocomplete].includes(interaction.type)
     ? interaction.data?.name.replace(/^(\[.\]) /, "")
     : interaction.type == InteractionTypes.MessageComponent
-      ? interaction.message?.interaction?.name
-      : interaction.type == InteractionTypes.ModalSubmit
-        ? interaction.data?.customId?.split("_")[0]
-        : "null"
+    ? interaction.message?.interaction?.name
+    : interaction.type == InteractionTypes.ModalSubmit
+    ? interaction.data?.customId?.split("_")[0]
+    : "null"
 }
 
 export function getSubcmd(interaction: Interaction) {
@@ -28,8 +28,8 @@ function getOptions(interaction: Interaction) {
   return interaction.data?.options?.[0].type === ApplicationCommandOptionTypes.SubCommandGroup
     ? interaction.data?.options?.[0].options?.[0].options
     : interaction.data?.options?.[0].type === ApplicationCommandOptionTypes.SubCommand
-      ? interaction.data?.options[0].options
-      : interaction.data?.options
+    ? interaction.data?.options[0].options
+    : interaction.data?.options
 }
 
 type ResolvedOptions = {
